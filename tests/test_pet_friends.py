@@ -57,3 +57,13 @@ def test_successful_update_self_pet_info(name='Momo', animal_type='Cat', age=7):
         assert result['name'] == name
     else:
         raise Exception("There is no my pets")
+
+
+def test_create_pet_simple(name='Bony', animal_type='Dog', age=3):
+    _, auth_key = pf.get_api_key(valid_email, valid_password)
+    status, result = pf.add_new_pets(auth_key, name, animal_type, age)
+
+    assert status == 200
+    assert result['name'] == name
+
+

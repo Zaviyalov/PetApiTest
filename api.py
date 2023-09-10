@@ -40,16 +40,16 @@ class PetFriends:
 
     def add_new_pets(self, auth_key: str, name: str, animal_type: str, age: str, pet_photo: str) -> json:
 
-        data = MultipartEncoder(
+        date = MultipartEncoder(
             fields={
                 'name': name,
                 'animal_type': animal_type,
                 'age': age,
                 'pet_photo': (pet_photo, open(pet_photo, 'rb'), 'image/jpeg')
             })
-        headers = {'auth_key': auth_key['key'], 'Content-Type': data.content_type}
+        headers = {'auth_key': auth_key['key'], 'Content-Type': date.content_type}
 
-        res = requests.post(self.base_url + "api/pets", headers=headers, data=data)
+        res = requests.post(self.base_url + "api/pets", headers=headers, date=date)
         status = res.status_code
         result = ""
         try:
@@ -90,3 +90,24 @@ class PetFriends:
         except json.decoder.JSONDecodeError:
             result = res.text
         return status, result
+
+    def create_pet_simple(self, auth_key: str, name: str, animal_type: str, age: str):
+
+        date = MultipartEncoder(
+            fields={
+                'name': name,
+                'animal_type': animal_type,
+                'age': age
+            })
+
+        headers = {'auth_key': auth_key['key'], 'Content-Type': date.content_type}
+        res = requests.post(self.base_url + 'api/create_pet_simple', headers=headers, date=date)
+        status = res.status_code
+        result = ""
+        try:
+            result = res.json()
+        except json.decoder.JSONDecodeError:
+            result = res.text
+        print(result)
+        return status, result
+
