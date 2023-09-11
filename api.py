@@ -49,7 +49,7 @@ class PetFriends:
             })
         headers = {'auth_key': auth_key['key'], 'Content-Type': date.content_type}
 
-        res = requests.post(self.base_url + "api/pets", headers=headers, date=date)
+        res = requests.post(self.base_url + "api/pets", headers=headers, data=date)
         status = res.status_code
         result = ""
         try:
@@ -101,7 +101,7 @@ class PetFriends:
             })
 
         headers = {'auth_key': auth_key['key'], 'Content-Type': date.content_type}
-        res = requests.post(self.base_url + 'api/create_pet_simple', headers=headers, date=date)
+        res = requests.post(self.base_url + 'api/create_pet_simple', headers=headers, data=date)
         status = res.status_code
         result = ""
         try:
@@ -111,3 +111,19 @@ class PetFriends:
         print(result)
         return status, result
 
+    def add_new_photo_of_pet(self, auth_key, pet_id, pet_photo) -> json:
+
+        date = MultipartEncoder(
+            fields={
+                "pet_photo": (pet_photo, open(pet_photo, 'rb'), 'image/jpeg')
+            })
+        header = {'auth_key': auth_key['key'], 'Content-Type': date.content_type}
+        res = requests.post(self.base_url + "api/pets/set_photo/" + pet_id, header=header, data=date)
+        status = res.status_code
+        result = ""
+        try:
+            result = res.json()
+        except json.decoder.JSONDecodeError:
+            result = res.text
+        print(result)
+        return status, result

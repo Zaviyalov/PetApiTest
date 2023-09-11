@@ -59,11 +59,19 @@ def test_successful_update_self_pet_info(name='Momo', animal_type='Cat', age=7):
         raise Exception("There is no my pets")
 
 
-def test_create_pet_simple(name='Bony', animal_type='Dog', age=3):
+def test_create_pet_simple(name='Bony', animal_type='Dog', age="3"):
     _, auth_key = pf.get_api_key(valid_email, valid_password)
-    status, result = pf.add_new_pets(auth_key, name, animal_type, age)
+    status, result = pf.create_pet_simple(auth_key, name, animal_type, age)
 
     assert status == 200
     assert result['name'] == name
 
 
+def test_add_photo_of_pets(pet_photo="image/image_123.jpg"):
+    pet_photo = os.path.join(os.path.dirname(__file__), pet_photo)
+    _, auth_key = pf.get_api_key(valid_email, valid_password)
+    _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
+    pet_id = my_pets['pets'][0]['id']
+    status, _ = pf.delete_pet(auth_key, pet_id)
+
+    assert status == 200
