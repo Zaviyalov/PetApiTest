@@ -67,11 +67,11 @@ def test_create_pet_simple(name='Bony', animal_type='Dog', age="3"):
     assert result['name'] == name
 
 
-def test_add_photo_of_pets(pet_photo="image/image_123.jpg"):
+def test_add_photo_of_pets(pet_photo="image/images_123.jpg"):
     pet_photo = os.path.join(os.path.dirname(__file__), pet_photo)
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
     pet_id = my_pets['pets'][0]['id']
-    status, _ = pf.delete_pet(auth_key, pet_id)
+    status, _ = pf.add_new_photo_of_pet(auth_key, pet_id, pet_photo)
 
     assert status == 200

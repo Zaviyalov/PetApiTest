@@ -117,8 +117,8 @@ class PetFriends:
             fields={
                 "pet_photo": (pet_photo, open(pet_photo, 'rb'), 'image/jpeg')
             })
-        header = {'auth_key': auth_key['key'], 'Content-Type': date.content_type}
-        res = requests.post(self.base_url + "api/pets/set_photo/" + pet_id, header=header, data=date)
+        headers = {'auth_key': auth_key['key'], 'Content-Type': date.content_type}
+        res = requests.post(self.base_url + "api/pets/set_photo/" + pet_id, headers=headers, data=date)
         status = res.status_code
         result = ""
         try:
