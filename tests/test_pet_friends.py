@@ -59,7 +59,7 @@ def test_successful_update_self_pet_info(name='Momo', animal_type='Cat', age=7):
         raise Exception("There is no my pets")
 
 
-def test_create_pet_simple(name='Bony', animal_type='Dog', age="3"):
+def test_create_pet_simple(name='Bony', animal_type='Fish', age="3"):
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     status, result = pf.create_pet_simple(auth_key, name, animal_type, age)
 
